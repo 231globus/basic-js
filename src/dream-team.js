@@ -11,11 +11,28 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  * createDreamTeam(['Matt', 'Ann', 'Dmitry', 'Max']) => 'ADMM'
  * createDreamTeam(['Olivia', 1111, 'Lily', 'Oscar', true, null]) => 'LOO'
- *
+ * 
+ * Ваша задача — реализовать createDreamTeam(members)функцию,
+ *  которая возвращает название вновь созданной команды ( string)
+ *  по именам ее участников ( Array). Удачи!
+ * 
  */
-function createDreamTeam(/* members */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function createDreamTeam(members) {
+
+  let secretNameArr = [];
+  let secretName = '';
+
+  if(typeof members === 'object' && members!=null && members.length>0) {
+		for(let i=0;i<members.length;i++) {
+			if(typeof members[i] === 'string') {
+				members[i] = members[i].trim()
+				secretNameArr.push(members[i][0].trim().toUpperCase());
+				secretNameArr.sort();
+				secretName = secretNameArr.join("");
+			}
+		}
+		return secretName
+	} else return false
 }
 
 module.exports = {
