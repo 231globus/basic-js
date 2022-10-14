@@ -14,21 +14,31 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
  function transform(arr) {
-
 	let transArr = []
+
+   if(!Array.isArray(arr)) return "'arr' parameter must be an instance of the Array!"
+   
 	for(let i=0;i<arr.length;i++) {
 		if(arr[i] === '--discard-next'){
 			i++;
 		}
 		else if(arr[i] === '--discard-prev') {
-			if(arr[i] == 0) i++
-		 	transArr.splice(i-1, 1)
+			if(transArr.length > 0) 
+        if(transArr[transArr.length-1] === arr[i-1]){
+          transArr.pop()
+        }
 		}
 		else if(arr[i] === '--double-next') {
-			
+      if(arr.length>i+1) {
+        transArr.push(arr[i+1])
+      }
 		}
 		else if(arr[i] === '--double-prev') {
-			
+			if(transArr.length > 0) {
+        if(transArr[transArr.length-1] === arr[i-1]) {
+          transArr.push(arr[i-1])
+        }
+      }
 		}
 		else {
 			transArr.push(arr[i])
@@ -37,8 +47,6 @@ const { NotImplementedError } = require('../extensions/index.js');
 	}
 	return transArr
 }
-
-console.log(transform([ '--discard-prev', 1, 2, 3,'--discard-prev', 4, 5,  6, 7, '--discard-prev']))
 
 module.exports = {
   transform
